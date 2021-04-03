@@ -17,7 +17,11 @@ class Attention_Layer(Layer):
         """
         """
         super(Attention_Layer, self).__init__()
-        self.att_dense = [Dense(unit, activation=activation) for unit in att_hidden_units]
+        if activation=="prelu":
+            self.att_dense = [Dense(unit, activation=tf.keras.layers.PReLU()) for unit in att_hidden_units]
+        else:
+            self.att_dense = [Dense(unit, activation=activation) for unit in att_hidden_units]
+
         self.att_final_dense = Dense(1)
 
     def call(self, inputs):
